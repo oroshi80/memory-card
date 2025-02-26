@@ -18,6 +18,7 @@ import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Leaderboard } from "./components/Leaderboard";
+import { motion } from "framer-motion";
 
 export default function Home() {
   const [player, setPlayer] = useState("");
@@ -94,34 +95,63 @@ export default function Home() {
                 <div className="flex gap-10">
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Button>
-                        <LucideUser /> player
-                      </Button>
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Button>
+                          <LucideUser /> player
+                        </Button>
+                      </motion.div>
                     </DialogTrigger>
                     <DialogContent className="mt-3">
-                      <DialogHeader>
-                        <DialogTitle className="text-xl font-semibold">
-                          What is your name?
-                        </DialogTitle>
-                        <DialogDescription>
-                          <Label htmlFor="name">Name</Label>
-                          <Input
-                            type="text"
-                            id="name"
-                            placeholder="John Doe"
-                            value={nameOneInput}
-                            onChange={(e) => setNameOneInput(e.target.value)} // Capture input
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                onePlayer(); // Call onePlayer function when Enter is pressed
-                              }
-                            }}
-                          />
-                        </DialogDescription>
-                      </DialogHeader>
-                      <DialogFooter>
-                        <Button onClick={onePlayer}>Set</Button>
-                      </DialogFooter>
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <DialogHeader>
+                          <DialogTitle className="text-xl font-semibold">
+                            <motion.span
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ delay: 0.2 }}
+                            >
+                              What is your name?
+                            </motion.span>
+                          </DialogTitle>
+                          <div className="mt-2">
+                            <motion.div
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.3 }}
+                            >
+                              <Label htmlFor="name">Name</Label>
+                              <Input
+                                type="text"
+                                id="name"
+                                placeholder="John Doe"
+                                value={nameOneInput}
+                                onChange={(e) => setNameOneInput(e.target.value)}
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter") {
+                                    onePlayer();
+                                  }
+                                }}
+                                className="transition-all duration-300 focus:scale-105 my-2"
+                              />
+                            </motion.div>
+                          </div>
+                        </DialogHeader>
+                        <DialogFooter className="mt-2">
+                          <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            <Button onClick={onePlayer}>Set</Button>
+                          </motion.div>
+                        </DialogFooter>
+                      </motion.div>
                     </DialogContent>
                   </Dialog>
                   <Button onClick={twoPlayers}>
@@ -134,24 +164,50 @@ export default function Home() {
                 <div className="flex justify-center items-center">
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Button className="m-2">
-                        <LucideClipboardList /> View Leaderboard
-                      </Button>
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Button className="m-2">
+                          <LucideClipboardList /> View Leaderboard
+                        </Button>
+                      </motion.div>
                     </DialogTrigger>
                     <DialogContent className="mt-3">
-                      <DialogHeader>
-                        <DialogTitle className="text-xl font-semibold">
-                          Leaderboard
-                        </DialogTitle>
-                        <>
-                          <Leaderboard />
-                        </>
-                      </DialogHeader>
-                      <DialogFooter>
-                        <DialogClose asChild>
-                          <Button variant="destructive">Close</Button>
-                        </DialogClose>
-                      </DialogFooter>
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <DialogHeader>
+                          <DialogTitle className="text-xl font-semibold">
+                            <motion.span
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ delay: 0.2 }}
+                            >
+                              Leaderboard
+                            </motion.span>
+                          </DialogTitle>
+                          <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.3 }}
+                          >
+                            <Leaderboard />
+                          </motion.div>
+                        </DialogHeader>
+                        <DialogFooter>
+                          <DialogClose asChild>
+                            <motion.div
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <Button variant="destructive">Close</Button>
+                            </motion.div>
+                          </DialogClose>
+                        </DialogFooter>
+                      </motion.div>
                     </DialogContent>
                   </Dialog>
                 </div>

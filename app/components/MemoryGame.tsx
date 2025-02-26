@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Leaderboard } from "./Leaderboard";
-
+import { motion } from "framer-motion";
 // Define the type for a card
 type CardType = {
   value: string;
@@ -344,22 +344,50 @@ const MemoryGame: React.FC<{ oneUpName: string }> = ({ oneUpName }) => {
                 </Button>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button variant="outline" className="text-foreground hover:bg-primary hover:text-primary-foreground">
-                      View Leaderboard
-                    </Button>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Button variant="outline" className="text-foreground hover:bg-primary hover:text-primary-foreground">
+                        View Leaderboard
+                      </Button>
+                    </motion.div>
                   </DialogTrigger>
                   <DialogContent className="mt-3">
-                    <DialogHeader>
-                      <DialogTitle className="text-xl font-semibold">
-                        Leaderboard
-                      </DialogTitle>
-                      <Leaderboard />
-                    </DialogHeader>
-                    <DialogFooter>
-                      <DialogClose asChild>
-                        <Button variant="destructive">Close</Button>
-                      </DialogClose>
-                    </DialogFooter>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <DialogHeader>
+                        <DialogTitle className="text-xl font-semibold">
+                          <motion.span
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.2 }}
+                          >
+                            Leaderboard
+                          </motion.span>
+                        </DialogTitle>
+                        <motion.div
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.3 }}
+                        >
+                          <Leaderboard />
+                        </motion.div>
+                      </DialogHeader>
+                      <DialogFooter>
+                        <DialogClose asChild>
+                          <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            <Button variant="destructive">Close</Button>
+                          </motion.div>
+                        </DialogClose>
+                      </DialogFooter>
+                    </motion.div>
                   </DialogContent>
                 </Dialog>
                 <Button 
