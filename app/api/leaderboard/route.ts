@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "@/lib/mongoDB";
 import Leaderboard from "@/app/schema/leaderboard";
 import { NextResponse } from 'next/server';
