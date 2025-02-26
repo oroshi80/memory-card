@@ -135,7 +135,7 @@ export default function Home() {
                   <Dialog>
                     <DialogTrigger asChild>
                       <Button className="m-2">
-                        <LucideClipboardList /> Leaderboard
+                        <LucideClipboardList /> View Leaderboard
                       </Button>
                     </DialogTrigger>
                     <DialogContent className="mt-3">

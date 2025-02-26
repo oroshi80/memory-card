@@ -2,6 +2,16 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@radix-ui/react-separator";
 import { Loader2 } from "lucide-react";
 import React, { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogClose,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Leaderboard } from "./Leaderboard";
 
 // Define the type for a card
 type CardType = {
@@ -42,6 +52,9 @@ const MemoryGame: React.FC<{ oneUpName: string }> = ({ oneUpName }) => {
   const [difficulty, setDifficulty] = useState<string>("easy"); // Default to 'easy'
   const [isSelectingDifficulty, setIsSelectingDifficulty] =
     useState<boolean>(true); // Track if user is selecting difficulty
+  const [startTime, setStartTime] = useState<number | null>(null);
+  const [endTime, setEndTime] = useState<number | null>(null);
+  const [gameTime, setGameTime] = useState<string>("");
 
   // Function to initialize and shuffle cards
   const initializeCards = (difficultyLevel: string) => {
@@ -125,7 +138,16 @@ const MemoryGame: React.FC<{ oneUpName: string }> = ({ oneUpName }) => {
     }
   }, [difficulty, isSelectingDifficulty]);
 
-  // Handle card click event
+  // Function to format milliseconds to HH:MM:SS
+  const formatTime = (ms: number): string => {
+    const seconds = Math.floor((ms / 1000) % 60);
+    const minutes = Math.floor((ms / (1000 * 60)) % 60);
+    const hours = Math.floor(ms / (1000 * 60 * 60));
+
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  // Modify handleCardClick to start timer on first click
   const handleCardClick = (clickedCard: CardType): void => {
     if (
       flippedCards.length === 2 ||
@@ -133,6 +155,11 @@ const MemoryGame: React.FC<{ oneUpName: string }> = ({ oneUpName }) => {
       clickedCard.isMatched
     )
       return;
+
+    // Start timer on first card click
+    if (!startTime) {
+      setStartTime(Date.now());
+    }
 
     const updatedFlippedCards = [...flippedCards, clickedCard];
     setFlippedCards(updatedFlippedCards);
@@ -171,12 +198,69 @@ const MemoryGame: React.FC<{ oneUpName: string }> = ({ oneUpName }) => {
   // Check if all cards have been matched
   const isGameWon: boolean = matchedCards.length === cards.length;
 
+  // Update useEffect to handle game completion
+  useEffect(() => {
+    if (isGameWon && startTime && !endTime) {
+      const end = Date.now();
+      setEndTime(end);
+      const totalTime = end - startTime;
+      setGameTime(formatTime(totalTime));
+
+      // Post to leaderboard
+      const postScore = async () => {
+        try {
+          const response = await fetch('/api/leaderboard', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name: oneUpName,
+              level: difficulty,
+              bestTime: totalTime, // Store raw milliseconds for sorting
+              date: new Date().toISOString(),
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to post score');
+          }
+        } catch (error) {
+          console.error('Error posting score:', error);
+        }
+      };
+
+      postScore();
+    }
+  }, [isGameWon, startTime, endTime, oneUpName, difficulty]);
+
+  // Modify handlePlayAgain to only reset game-specific states
+  const handlePlayAgain = () => {
+    setStartTime(null);
+    setEndTime(null);
+    setGameTime("");
+    setIsSelectingDifficulty(true);
+  };
+
+  const handleBackToHome = () => {
+    // Reset all game states
+    setStartTime(null);
+    setEndTime(null);
+    setGameTime("");
+    setIsSelectingDifficulty(true);
+    setCards([]);
+    setFlippedCards([]);
+    setMatchedCards([]);
+    // Reset player selection in parent component
+    window.location.reload();
+  };
+
   return (
     <div className="game">
-      {/* Difficulty Selection Screen */}
       {isSelectingDifficulty ? (
         <div className="difficulty-selection text-center">
-          <h2 className="text-2xl font-bold">Select Difficulty</h2>
+          <h2 className="text-2xl font-bold mb-2">Player: {oneUpName}</h2>
+          <h3 className="text-xl mb-4">Select Difficulty</h3>
           <div className="flex gap-4 justify-center mt-4">
             <Button
               onClick={() => {
@@ -211,12 +295,21 @@ const MemoryGame: React.FC<{ oneUpName: string }> = ({ oneUpName }) => {
               Extreme
             </Button>
           </div>
+          <div className="mt-4">
+            <Button 
+              onClick={handleBackToHome}
+              variant="outline"
+              className="text-foreground hover:bg-primary hover:text-primary-foreground"
+            >
+              Back to Player Selection
+            </Button>
+          </div>
         </div>
       ) : (
         // Game Board
         <>
           <div className="text-center text-2xl p-2">
-            {oneUpName && <div>Player one: {oneUpName}</div>}
+            {oneUpName && <div>Player: {oneUpName}</div>}
           </div>
           <Separator />
           <div className="board">
@@ -237,22 +330,48 @@ const MemoryGame: React.FC<{ oneUpName: string }> = ({ oneUpName }) => {
               </Button>
             </div>
           )}
-          {/* Show "You Win" message only after game is completed */}
+          {/* Updated win message with three buttons */}
           {!isShuffling && isGameWon && (
             <div className="win-message text-center">
               <p className="text-lg font-bold">You win! 🎉</p>
-              <Button
-                onClick={() => {
-                  setIsSelectingDifficulty(true);
-                }}
-                className="mt-4"
-                disabled={isShuffling}
-              >
-                Play Again
-              </Button>
+              <p className="text-md mt-2">Completion Time: {gameTime}</p>
+              <div className="flex gap-4 justify-center mt-4">
+                <Button
+                  onClick={handlePlayAgain}
+                    disabled={isShuffling}
+                >
+                  Play Again
+                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" className="text-foreground hover:bg-primary hover:text-primary-foreground">
+                      View Leaderboard
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="mt-3">
+                    <DialogHeader>
+                      <DialogTitle className="text-xl font-semibold">
+                        Leaderboard
+                      </DialogTitle>
+                      <Leaderboard />
+                    </DialogHeader>
+                    <DialogFooter>
+                      <DialogClose asChild>
+                        <Button variant="destructive">Close</Button>
+                      </DialogClose>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+                <Button 
+                  onClick={handleBackToHome}
+                  variant="outline"
+                  className="text-foreground hover:bg-primary hover:text-primary-foreground"
+                >
+                  Back to Home
+                </Button>
+              </div>
             </div>
           )}
-          <div>Try to beat time </div>
         </>
       )}
     </div>
