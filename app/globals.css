@@ -532,3 +532,16 @@
   font-size: 20px;
   color: green;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out; /* Adjust duration and timing as needed */
+}
