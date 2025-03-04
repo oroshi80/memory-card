@@ -45,8 +45,10 @@ export default function Home() {
           ) : player === "2up" ? (
             <div className="flex flex-col">
               <div className="text-center">Coming soon!</div>
-              <div className="text-center mt-2">
-                <PlayerDialog setPlayer={twoPlayers} isTwoPlayers={true} />
+                <div className="text-center mt-2">
+                  {twoUpNames && <div>Player: {oneUpName} vs Player: {twoUpNames}</div>} 
+                <PlayerDialog setPlayer={onePlayer} isTwoPlayers={false} />
+
               </div>
             </div>
           ) : (

@@ -11,12 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Calendar } from "@/components/ui/calendar"
-import { cn } from "@/lib/utils"
 import { format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
-import { motion } from "framer-motion";
 
 type LeaderboardProps = {
   name: string;
