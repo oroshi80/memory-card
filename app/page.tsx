@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import MemoryCard from "@/app/components/MemoryGame";
 import { ModeToggle } from "@/app/components/ThemeSwitch";
 import { Button } from "@/components/ui/button";
-import { LucideClipboardList, LucideUser } from "lucide-react";
+import { LucideClipboardList } from "lucide-react";
 import {
   Dialog,
   DialogClose,
