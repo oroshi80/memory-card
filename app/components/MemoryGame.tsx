@@ -273,7 +273,7 @@ const MemoryGame: React.FC<{ oneUpName: string }> = ({ oneUpName }) => {
     <div className="game">
       {isSelectingDifficulty ? (
         <div className="difficulty-selection text-center">
-          <h3 className="text-xl mb-4">Select Difficulty</h3>
+          <h3 className="text-xl mb-4 press-start-2p-regular">Select Difficulty</h3>
           <div className="flex gap-4 justify-center mt-4">
             <Button
               onClick={() => {
@@ -343,8 +343,8 @@ const MemoryGame: React.FC<{ oneUpName: string }> = ({ oneUpName }) => {
           {/* Updated win message with three buttons */}
           {!isShuffling && isGameWon && (
             <div className="win-message text-center">
-              <p className="text-lg font-bold">You win! 🎉</p>
-              <p className="text-md mt-2">Completion Time: {gameTime}</p>
+              <p className="text-lg font-bold press-start-2p-regular">You win! 🎉</p>
+              <p className="text-md mt-2 press-start-2p-regular">Completion Time: {gameTime}</p>
               <div className="flex gap-4 justify-center mt-4">
                 <Button
                   onClick={handlePlayAgain}

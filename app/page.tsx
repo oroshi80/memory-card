@@ -44,8 +44,8 @@ export default function Home() {
           ) : (
             <>
               <div className="flex flex-col">
-                <div className="text-center text-2xl mb-4">Select Player</div>
-                <div className="flex gap-10">
+                <div className="text-center text-2xl mb-4 press-start-2p-regular">Select Player</div>
+                <div className="flex gap-10 justify-center items-center">
                   <PlayerDialog setPlayer={onePlayer} isTwoPlayers={false} />
                   <PlayerDialog setPlayer={twoPlayers} isTwoPlayers={true} />
                 </div>

@@ -19,10 +19,10 @@ export const Nav = ({   playerOne, playerTwo}: NavProps) => {
                 <div className='flex gap-2 text-xl justify-center items-center'>
                     {playerOne || playerTwo.some(name => name.trim() !== "") ? (
                         <>
-                            {playerOne && <div>Player 1: {playerOne}</div>}
+                            {playerOne && <div className='press-start-2p-regular'>Player 1: {playerOne}</div>}
                             {playerTwo.some(name => name.trim() !== "") && (
-                                <div>
-                                   {playerTwo[0]}  vs {playerTwo[1]} 
+                                <div className='press-start-2p-regular'>
+                                   {playerTwo[0]}  Vs {playerTwo[1]} 
                                 </div>
                             )}
                         </>
