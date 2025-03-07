@@ -2,13 +2,13 @@ import React from 'react'
 import { ModeToggle } from './ThemeSwitch'
 
 interface NavProps {
-    playerOnePoint: number;
-    playerTwoPoint: number;
+    // playerOnePoint: number;
+    // playerTwoPoint: number;
     playerOne: string;
     playerTwo: string[];
 }
 
-export const Nav = ({playerOnePoint, playerTwoPoint, playerOne, playerTwo}: NavProps) => {
+export const Nav = ({   playerOne, playerTwo}: NavProps) => {
     console.log(playerTwo);
     return (
       <div className="p-2">
@@ -22,7 +22,7 @@ export const Nav = ({playerOnePoint, playerTwoPoint, playerOne, playerTwo}: NavP
                             {playerOne && <div>Player 1: {playerOne}</div>}
                             {playerTwo.some(name => name.trim() !== "") && (
                                 <div>
-                                   {playerTwo[0]} ({playerOnePoint}) vs {playerTwo[1]} ({playerTwoPoint})
+                                   {playerTwo[0]}  vs {playerTwo[1]} 
                                 </div>
                             )}
                         </>

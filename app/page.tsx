@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import MemoryCard from "@/app/components/MemoryGame";
 import { Separator } from "@/components/ui/separator";
 import { Leaderboard } from "./components/Leaderboard";
@@ -10,8 +10,8 @@ export default function Home() {
   const [oneUpName, setOneUpName] = useState("");
   const [twoUpNames, setTwoUpNames] = useState(["", ""]);
   //player one point and player two point
-  const [playerOnePoint, setPlayerOnePoint] = useState(0);
-  const [playerTwoPoint, setPlayerTwoPoint] = useState(0);
+  // const [playerOnePoint, setPlayerOnePoint] = useState(0);
+  // const [playerTwoPoint, setPlayerTwoPoint] = useState(0);
 
 
   const onePlayer = (name: string[]) => {
@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <>
-        <Nav playerOne={oneUpName} playerOnePoint={playerOnePoint} playerTwo={twoUpNames} playerTwoPoint={playerTwoPoint} />
+        <Nav playerOne={oneUpName} playerTwo={twoUpNames}  />
       <div className="flex items-center justify-center">
         <div className="flex p-5 bg-secondary w-full sm:w-[50%] rounded-lg justify-center items-center ">
           {player === "1up" ? (
