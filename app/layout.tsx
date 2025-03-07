@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Memory Card Game",
@@ -12,8 +13,8 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
-  return (
+  }>) {
+    return (
     <html lang="en" suppressHydrationWarning>
       <body className={`antialiased`}>
         <ThemeProvider
@@ -22,9 +23,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
           enableColorScheme
-        >
+          >
           {children}
         </ThemeProvider>
+        <Toaster richColors position="top-right"/>
       </body>
     </html>
   );

@@ -1,27 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MemoryCard from "@/app/components/MemoryGame";
-import { ModeToggle } from "@/app/components/ThemeSwitch";
-import { Button } from "@/components/ui/button";
-import { LucideClipboardList } from "lucide-react";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { Leaderboard } from "./components/Leaderboard";
-import { motion } from "framer-motion";
 import PlayerDialog from "@/app/components/PlayerDialog";
-
+import { Nav } from "@/app/components/nav";
 export default function Home() {
   const [player, setPlayer] = useState("");
   const [oneUpName, setOneUpName] = useState("");
   const [twoUpNames, setTwoUpNames] = useState(["", ""]);
+  //player one point and player two point
+  const [playerOnePoint, setPlayerOnePoint] = useState(0);
+  const [playerTwoPoint, setPlayerTwoPoint] = useState(0);
+
 
   const onePlayer = (name: string[]) => {
     setPlayer("1up");
@@ -33,11 +24,10 @@ export default function Home() {
     setTwoUpNames(names);
   };
 
+
   return (
-    <div className="p-4">
-      <div className="w-full p-2 text-3xl text-center font-semibold bg-slate-400 rounded-md mb-5">
-        Memory Card Game <ModeToggle />
-      </div>
+    <>
+        <Nav playerOne={oneUpName} playerOnePoint={playerOnePoint} playerTwo={twoUpNames} playerTwoPoint={playerTwoPoint} />
       <div className="flex items-center justify-center">
         <div className="flex p-5 bg-secondary w-full sm:w-[50%] rounded-lg justify-center items-center ">
           {player === "1up" ? (
@@ -46,8 +36,8 @@ export default function Home() {
             <div className="flex flex-col">
               <div className="text-center">Coming soon!</div>
                 <div className="text-center mt-2">
-                  {twoUpNames && <div>Player: {oneUpName} vs Player: {twoUpNames}</div>} 
-                <PlayerDialog setPlayer={onePlayer} isTwoPlayers={false} />
+
+                {/* <PlayerDialog setPlayer={onePlayer} isTwoPlayers={false} /> */}
 
               </div>
             </div>
@@ -61,61 +51,14 @@ export default function Home() {
                 </div>
                 <Separator className="mt-4 bg-neutral-500" />
 
-                <div className="flex justify-center items-center">
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <Button className="m-2">
-                          <LucideClipboardList /> View Leaderboard
-                        </Button>
-                      </motion.div>
-                    </DialogTrigger>
-                    <DialogContent className="mt-3">
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <DialogHeader>
-                          <DialogTitle className="text-xl font-semibold">
-                            <motion.span
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              transition={{ delay: 0.2 }}
-                            >
-                              Leaderboard
-                            </motion.span>
-                          </DialogTitle>
-                          <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.3 }}
-                          >
-                            <Leaderboard />
-                          </motion.div>
-                        </DialogHeader>
-                        <DialogFooter>
-                          <DialogClose asChild>
-                            <motion.div
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                            >
-                              <Button variant="destructive">Close</Button>
-                            </motion.div>
-                          </DialogClose>
-                        </DialogFooter>
-                      </motion.div>
-                    </DialogContent>
-                  </Dialog>
+                <div className="flex justify-center items-center mt-4">
+                  <Leaderboard />                          
                 </div>
               </div>
             </>
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 }

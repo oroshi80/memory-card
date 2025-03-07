@@ -1,18 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Separator } from "@radix-ui/react-separator";
 import { Loader2 } from "lucide-react";
-import React, { useState, useEffect } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-  DialogClose,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import React, { useState, useEffect, useRef } from "react";
 import { Leaderboard } from "./Leaderboard";
-import { motion } from "framer-motion";
 // Define the type for a card
 type CardType = {
   value: string;
@@ -29,22 +18,46 @@ type CardProps = {
 
 // Card Component with Flip Animation
 const Card: React.FC<CardProps> = ({ card, onClick }) => {
+  const [deckSet, setDeckSet] = useState<string>(localStorage.getItem("themeDeck") || "none");
+  const backDeckRef = useRef<HTMLDivElement>(null); // Create a ref for the card back
+
+  useEffect(() => {
+    const updateDeckSet = () => {
+      const newDeckSet = localStorage.getItem("themeDeck") || "none";
+      setDeckSet(newDeckSet);
+    };
+
+    // Listen for storage changes
+    window.addEventListener('storage', updateDeckSet);
+
+    // Cleanup listener on unmount
+    return () => {
+      window.removeEventListener('storage', updateDeckSet);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (backDeckRef.current) {
+      // Clear only the specific class related to the deck
+      backDeckRef.current.className = `card-back shadow-md text-primary-foreground border-2 border-black`; // Reset to base class
+      backDeckRef.current.classList.add(`card-deck-${deckSet}`); // Add new class
+    }
+  }, [deckSet]); // Run this effect when deckSet changes
+
   return (
     <div className="card-container" onClick={onClick}>
-      <div
-        className={`card ${card.isFlipped || card.isMatched ? "flipped" : ""} `}
-      >
+      <div className={`card ${card.isFlipped || card.isMatched ? "flipped" : ""}`}>
         <div className="card-front shadow-md bg-neutral-100 text-black">
           {card.value}
         </div>
-        <div className="card-back shadow-md text-primary-foreground bg-primary border-2 border-black"></div>
+        <div ref={backDeckRef} className={`card-back shadow-md text-primary-foreground border-2 border-black`}></div>
       </div>
     </div>
   );
 };
 
 // Memory Game Component
-const MemoryGame: React.FC<{ oneUpName: string }> = ({ oneUpName }) => {
+const MemoryGame: React.FC<{ oneUpName: string }> = ({ oneUpName }) => { 
   const [cards, setCards] = useState<CardType[]>([]);
   const [flippedCards, setFlippedCards] = useState<CardType[]>([]);
   const [matchedCards, setMatchedCards] = useState<CardType[]>([]);
@@ -55,6 +68,7 @@ const MemoryGame: React.FC<{ oneUpName: string }> = ({ oneUpName }) => {
   const [startTime, setStartTime] = useState<number | null>(null);
   const [endTime, setEndTime] = useState<number | null>(null);
   const [gameTime, setGameTime] = useState<string>("");
+  
 
   // Function to initialize and shuffle cards
   const initializeCards = (difficultyLevel: string) => {
@@ -191,7 +205,7 @@ const MemoryGame: React.FC<{ oneUpName: string }> = ({ oneUpName }) => {
           );
         }
         setFlippedCards([]);
-      }, 1000);
+      }, 500);
     }
   };
 
@@ -259,7 +273,6 @@ const MemoryGame: React.FC<{ oneUpName: string }> = ({ oneUpName }) => {
     <div className="game">
       {isSelectingDifficulty ? (
         <div className="difficulty-selection text-center">
-          <h2 className="text-2xl font-bold mb-2">Player: {oneUpName}</h2>
           <h3 className="text-xl mb-4">Select Difficulty</h3>
           <div className="flex gap-4 justify-center mt-4">
             <Button
@@ -308,10 +321,7 @@ const MemoryGame: React.FC<{ oneUpName: string }> = ({ oneUpName }) => {
       ) : (
         // Game Board
         <>
-          <div className="text-center text-2xl p-2">
-            {oneUpName && <div>Player: {oneUpName}</div>}
-          </div>
-          <Separator />
+         
           <div className="board">
             {cards.map((card) => (
               <Card
@@ -342,54 +352,7 @@ const MemoryGame: React.FC<{ oneUpName: string }> = ({ oneUpName }) => {
                 >
                   Play Again
                 </Button>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Button variant="outline" className="text-foreground hover:bg-primary hover:text-primary-foreground">
-                        View Leaderboard
-                      </Button>
-                    </motion.div>
-                  </DialogTrigger>
-                  <DialogContent className="mt-3">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <DialogHeader>
-                        <DialogTitle className="text-xl font-semibold">
-                          <motion.span
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.2 }}
-                          >
-                            Leaderboard
-                          </motion.span>
-                        </DialogTitle>
-                        <motion.div
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.3 }}
-                        >
-                          <Leaderboard />
-                        </motion.div>
-                      </DialogHeader>
-                      <DialogFooter>
-                        <DialogClose asChild>
-                          <motion.div
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            <Button variant="destructive">Close</Button>
-                          </motion.div>
-                        </DialogClose>
-                      </DialogFooter>
-                    </motion.div>
-                  </DialogContent>
-                </Dialog>
+                <Leaderboard />
                 <Button 
                   onClick={handleBackToHome}
                   variant="outline"

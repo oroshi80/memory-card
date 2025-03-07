@@ -26,11 +26,31 @@ const ColorThemes = [
   { name: "Zinc", value: "zinc", tailwindColor: "bg-zinc-500" },
 ];
 
+const DeckThemes = [
+  { name: "None", value: "none" },
+  { name: "Wavy", value: "wavy" },
+  { name: "Rhombus", value: "rhombus" },
+  { name: "Zigzag", value: "zigzag" },
+  { name: "Zigzag 3D", value: "zigzag3D" },
+  { name: "Moon", value: "moon" },
+  { name: "Circle", value: "circle" },
+  { name: "Diagonal", value: "diagonal" },
+  { name: "Diagonal Reverse", value: "diagonal-reverse" },
+  { name: "Paper", value: "paper" },
+  { name: "Horizontal Lines", value: "horizontal-lines" },
+  { name: "Vertical Lines", value: "vertical-lines" },
+  { name: "Diagonal V3", value: "diagonal-v3" },
+  { name: "Boxes", value: "boxes" },
+  { name: "Checkers", value: "checkers" },
+  { name: "Cross", value: "cross" },
+];
+
 export function ModeToggle() {
   const { theme, setTheme } = useTheme();
 
   // Set initial state to a fallback theme (zinc) until localStorage is available
   const [colorSet, setColor] = React.useState<string>("zinc");
+  const [deckSet, setDeck] = React.useState<string>("none");
 
   React.useEffect(() => {
     // Check if we are on the client side and localStorage is available
@@ -54,6 +74,12 @@ export function ModeToggle() {
     localStorage.setItem("themeColor", newColor);
 
     setColor(newColor);
+  };
+
+  const changeDeck = (newDeck: string) => {
+    localStorage.setItem("themeDeck", newDeck);
+    setDeck(newDeck);
+    window.dispatchEvent(new Event('storage'));
   };
 
   // Effect to apply theme on mount
@@ -93,6 +119,22 @@ export function ModeToggle() {
             ))}
           </div>
 
+          <div className="py-2 font-semibold">Card Deck</div>
+          <div className="flex gap-2 flex-wrap">
+            {DeckThemes.map((deck) => (
+              <Button
+                key={deck.value}
+                variant="outline"
+              className={`w-10 h-10 rounded-md card-deck-${deck.value} ${
+                deckSet === deck.value ? "border-2 border-black dark:border-white" : ""
+              }`}
+              onClick={() => changeDeck(deck.value)}
+              >
+                
+              </Button>
+            ))}
+
+          </div>
           <div className="py-2 font-semibold">Mode</div>
           <div className="flex gap-2 flex-wrap">
             <Button

@@ -9,9 +9,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { Loader2, LucideClipboardList } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns"
+import { motion } from "framer-motion";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 type LeaderboardProps = {
   name: string;
@@ -78,7 +80,39 @@ export const Leaderboard = () => {
 
   return (
     <div>
-      <div className="flex gap-2 mb-4">
+        <Dialog>
+                    <DialogTrigger asChild>
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Button >
+                          <LucideClipboardList /> View Leaderboard
+                        </Button>
+                      </motion.div>
+                    </DialogTrigger>
+                    <DialogContent className="mt-3">
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <DialogHeader>
+                          <DialogTitle className="text-xl font-semibold">
+                            <motion.span
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ delay: 0.2 }}
+                            >
+                              Leaderboard
+                            </motion.span>
+                          </DialogTitle>
+                          <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.3 }}
+                          >
+                             <div className="flex gap-2 mb-4">
         <Button
           onClick={() => setDateFilter("today")}
           variant={dateFilter === "today" ? "default" : "outline"}
@@ -160,6 +194,23 @@ export const Leaderboard = () => {
           )}
         </TableBody>
       </Table>
+                          </motion.div>
+                        </DialogHeader>
+                        <DialogFooter>
+                          <DialogClose asChild>
+                            <motion.div
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <Button variant="destructive">Close</Button>
+                            </motion.div>
+                          </DialogClose>
+                        </DialogFooter>
+                      </motion.div>
+                    </DialogContent>
+      </Dialog>
+      
+     
     </div>
   );
 };

@@ -55,7 +55,9 @@
 
     --chart-5: 27 87% 67%;
 
-    --radius: 0.5rem
+    --radius: 0.5rem;
+
+
 
   }
   .dark {
@@ -106,7 +108,9 @@
 
     --chart-4: 280 65% 60%;
 
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
+
+
   }
 }
 
@@ -137,6 +141,9 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --primary-hue: 220; /* Example hue */
+    --primary-saturation: 80%; /* Example saturation */
+    --primary-lightness: 50%; /* Example lightness */
   }
 
   .theme-red.dark {
@@ -164,6 +171,9 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --primary-hue: 220; /* Example hue */
+    --primary-saturation: 80%; /* Example saturation */
+    --primary-lightness: 50%; /* Example lightness */
   }
 
   /* orange  */
@@ -194,6 +204,9 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --primary-hue: 220; /* Example hue */
+    --primary-saturation: 80%; /* Example saturation */
+    --primary-lightness: 50%; /* Example lightness */
   }
 
   .theme-orange.dark {
@@ -221,6 +234,9 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --primary-hue: 220; /* Example hue */
+    --primary-saturation: 80%; /* Example saturation */
+    --primary-lightness: 50%; /* Example lightness */
   }
 
   /* yellow */
@@ -251,6 +267,9 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --primary-hue: 220; /* Example hue */
+    --primary-saturation: 80%; /* Example saturation */
+    --primary-lightness: 50%; /* Example lightness */
   }
 
   .theme-yellow.dark {
@@ -278,6 +297,9 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --primary-hue: 220; /* Example hue */
+    --primary-saturation: 80%; /* Example saturation */
+    --primary-lightness: 50%; /* Example lightness */
   }
 
 /* green */
@@ -307,6 +329,9 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --primary-hue: 220; /* Example hue */
+    --primary-saturation: 80%; /* Example saturation */
+    --primary-lightness: 50%; /* Example lightness */
   }
 
   .theme-green.dark {
@@ -334,6 +359,9 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --primary-hue: 220; /* Example hue */
+    --primary-saturation: 80%; /* Example saturation */
+    --primary-lightness: 50%; /* Example lightness */
   }
 
   /* blue */
@@ -364,6 +392,9 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --primary-hue: 220; /* Example hue */
+    --primary-saturation: 80%; /* Example saturation */
+    --primary-lightness: 50%; /* Example lightness */
   }
 
   .theme-blue.dark {
@@ -391,6 +422,9 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --primary-hue: 220; /* Example hue */
+    --primary-saturation: 80%; /* Example saturation */
+    --primary-lightness: 50%; /* Example lightness */
   }
 
   /* violet */
@@ -421,6 +455,9 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --primary-hue: 220; /* Example hue */
+    --primary-saturation: 80%; /* Example saturation */
+    --primary-lightness: 50%; /* Example lightness */
   }
 
   .theme-violet.dark {
@@ -448,6 +485,9 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --primary-hue: 220; /* Example hue */
+    --primary-saturation: 80%; /* Example saturation */
+    --primary-lightness: 50%; /* Example lightness */
   }
 
 
@@ -492,6 +532,7 @@
 }
 
 .card-front,
+
 .card-back {
   width: 100%;
   height: 100%;
@@ -544,4 +585,118 @@
 
 .animate-fade-in {
   animation: fadeIn 0.5s ease-in-out; /* Adjust duration and timing as needed */
+}
+
+/* card deck */
+.card-deck-none {
+  background-color: hsl(var(--primary));
+  opacity: 0.8;
+}
+
+.card-deck-wavy {
+  background-color: hsl(var(--primary));
+  opacity: 0.8;
+  background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #e5e5f7 10px ), repeating-linear-gradient( hsl(var(--primary)), hsl(var(--primary)) ); /* Replace var(--background) with a fallback color */
+}
+
+.card-deck-rhombus {
+  background-color: hsl(var(--primary));
+  opacity: 0.8;
+  background-image:  linear-gradient(135deg, hsl(var(--primary)) 25%, transparent 25%), linear-gradient(225deg, hsl(var(--primary)) 25%, transparent 25%), linear-gradient(45deg, hsl(var(--primary)) 25%, transparent 25%), linear-gradient(315deg, hsl(var(--primary)) 25%, hsl(var(--foreground)) 25%);
+  background-position:  10px 0, 10px 0, 0 0, 0 0;
+  background-size: 10px 10px;
+  background-repeat: repeat;
+}
+
+.card-deck-zigzag3D {
+  background-color: hsl(var(--primary));
+  opacity: 0.8;
+  background: linear-gradient(135deg, hsl(var(--foreground)) 25%, transparent 25%) -10px 0/ 20px 20px, linear-gradient(225deg, hsl(var(--primary)) 25%, transparent 25%) -10px 0/ 20px 20px, linear-gradient(315deg, hsl(var(--foreground)) 25%, transparent 25%) 0px 0/ 20px 20px, linear-gradient(45deg, hsl(var(--primary)) 25%, #e5e5f7 25%) 0px 0/ 20px 20px;
+}
+
+.card-deck-zigzag {
+  background-color: hsl(var(--primary));
+  opacity: 0.8;
+  background-image:  linear-gradient(135deg, hsl(var(--primary)) 25%, transparent 25%), linear-gradient(225deg, hsl(var(--primary)) 25%, transparent 25%), linear-gradient(45deg, hsl(var(--primary)) 25%, transparent 25%), linear-gradient(315deg, hsl(var(--primary)) 25%, hsl(var(--foreground)) 25%);
+  background-position:  10px 0, 10px 0, 0 0, 0 0;
+  background-size: 20px 20px;
+  background-repeat: repeat;
+}
+
+.card-deck-moon {
+  background-color: hsl(var(--primary));
+  opacity: 0.8;
+  background-image: radial-gradient( ellipse farthest-corner at 10px 10px , hsl(var(--primary)), hsl(var(--primary)) 50%, hsl(var(--foreground)) 50%);
+  background-size: 10px 10px;
+}
+
+.card-deck-circle {
+background-color: hsl(var(--primary));
+opacity: 0.8;
+background-image: radial-gradient(circle at center center, hsl(var(--foreground)), #e5e5f7), repeating-radial-gradient(circle at center center, hsl(var(--foreground)), hsl(var(--primary)), 10px, transparent 20px, transparent 10px);
+background-blend-mode: multiply;
+}
+
+
+.card-deck-diagonal {
+  background-color: hsl(var(--primary));
+opacity: 0.8;
+background: repeating-linear-gradient( 45deg, hsl(var(--primary)), hsl(var(--primary)) 5px, hsl(var(--foreground)) 5px, hsl(var(--foreground)) 25px );
+}
+
+.card-deck-diagonal-reverse {
+  background-color: hsl(var(--primary));
+  opacity: 0.8;
+  background: repeating-linear-gradient( -45deg, hsl(var(--primary)), hsl(var(--primary)) 5px, hsl(var(--foreground)) 5px, hsl(var(--foreground)) 25px );
+}
+
+.card-deck-paper {
+  background-color: hsl(var(--primary));
+opacity: 0.8;
+background-image:  linear-gradient(hsl(var(--primary)) 2px, transparent 2px), linear-gradient(90deg, hsl(var(--primary)) 2px, transparent 2px), linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, hsl(var(--foreground)) 1px);
+background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
+background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+}
+
+.card-deck-horizontal-lines {
+  background-color: hsl(var(--primary));
+  opacity: 0.8;
+  background-image: linear-gradient(0deg, hsl(var(--primary)) 50%, hsl(var(--foreground)) 50%);
+  background-size: 10px 10px;
+}
+
+.card-deck-vertical-lines {
+  background-color: hsl(var(--primary));
+  opacity: 0.8;
+  background-image: linear-gradient(90deg, hsl(var(--primary)) 50%, hsl(var(--foreground)) 50%);
+  background-size: 10px 10px;
+}
+
+.card-deck-diagonal-v3 {
+  background-color: hsl(var(--primary));
+opacity: 0.8;
+background-size: 10px 10px;
+background-image: repeating-linear-gradient(45deg, hsl(var(--primary)) 0, hsl(var(--primary)) 1px, hsl(var(--foreground)) 0, hsl(var(--foreground)) 50%);
+}
+
+.card-deck-boxes {  
+background-color: hsl(var(--primary));
+opacity: 0.8;
+background-image:  linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(to right, hsl(var(--primary)) 1px, hsl(var(--foreground)) 1px);
+background-size: 20px 20px;
+}
+
+.card-deck-checkers {
+  background-color: hsl(var(--primary));
+opacity: 0.8;
+background-image:  repeating-linear-gradient(45deg, hsl(var(--primary)) 25%, transparent 25%, transparent 75%, hsl(var(--primary)) 75%, hsl(var(--primary))), repeating-linear-gradient(45deg, hsl(var(--primary)) 25%, hsl(var(--foreground)) 25%, hsl(var(--foreground)) 75%, hsl(var(--primary)) 75%, hsl(var(--primary)));
+background-position: 0 0, 10px 10px;
+background-size: 20px 20px;
+}
+
+.card-deck-cross {
+  background-color: hsl(var(--foreground));
+  opacity: 0.8;
+  background: radial-gradient(circle, transparent 20%, hsl(var(--foreground)) 20%, hsl(var(--foreground)) 80%, transparent 80%, transparent), radial-gradient(circle, transparent 20%, hsl(var(--foreground)) 20%, hsl(var(--foreground)) 80%, transparent 80%, transparent) 25px 25px, linear-gradient( hsl(var(--primary)) 2px, transparent 2px) 0 -1px, linear-gradient(90deg,  hsl(var(--primary)) 2px, hsl(var(--foreground)) 2px) -1px 0;
+  background-size: 50px 50px, 50px 50px, 25px 25px, 25px 25px;
 }

@@ -5,18 +5,26 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { LucideUser } from "lucide-react";
-
+import { toast } from "sonner";
 const PlayerDialog = ({ setPlayer, isTwoPlayers }: { setPlayer: (name: string[]) => void; isTwoPlayers: boolean }) => {
   const [nameInput1, setNameInput1] = useState("");
   const [nameInput2, setNameInput2] = useState("");
   const dialogContentRef = useRef<HTMLDivElement>(null);
 
   const handleSetPlayer = () => {
-    if (isTwoPlayers) {
+      if (isTwoPlayers) {
+        if (nameInput1 === "" || nameInput2 === "") {
+          toast.error("Please enter both player names");
+          return;
+        }
       setPlayer([nameInput1, nameInput2]); // Set both player names
       setNameInput1(""); // Clear the first input field
       setNameInput2(""); // Clear the second input field
-    } else {
+      } else {
+        if (nameInput1 === "") {
+          toast.error("Please enter a player name");
+          return;
+        }
       setPlayer([nameInput1]); // Set the single player name
       setNameInput1(""); // Clear the input field
     }
@@ -49,12 +57,12 @@ const PlayerDialog = ({ setPlayer, isTwoPlayers }: { setPlayer: (name: string[])
           <DialogHeader>
             <DialogTitle className="text-xl font-semibold">
               <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
-                What is your {isTwoPlayers ? "names?" : "name?"}
+                Enter {isTwoPlayers ? "players" : "player"} name 
               </motion.span>
             </DialogTitle>
             <div className="mt-2">
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
-                <Label htmlFor="name1">Name 1</Label>
+                <Label htmlFor="name1">Player 1</Label>
                 <Input
                   type="text"
                   id="name1"
@@ -70,7 +78,7 @@ const PlayerDialog = ({ setPlayer, isTwoPlayers }: { setPlayer: (name: string[])
                 />
                 {isTwoPlayers && (
                   <>
-                    <Label htmlFor="name2">Name 2</Label>
+                    <Label htmlFor="name2">Player 2</Label>
                     <Input
                       type="text"
                       id="name2"
