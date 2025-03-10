@@ -5,13 +5,15 @@ import { Separator } from "@/components/ui/separator";
 import { Leaderboard } from "./components/Leaderboard";
 import PlayerDialog from "@/app/components/PlayerDialog";
 import { Nav } from "@/app/components/nav";
+import MemoryGame2up from "./components/MemoryGame2up";
+
+
 export default function Home() {
   const [player, setPlayer] = useState("");
   const [oneUpName, setOneUpName] = useState("");
   const [twoUpNames, setTwoUpNames] = useState(["", ""]);
-  //player one point and player two point
-  // const [playerOnePoint, setPlayerOnePoint] = useState(0);
-  // const [playerTwoPoint, setPlayerTwoPoint] = useState(0);
+  const [playerOneScore, setPlayerOneScore] = useState(0);
+  const [playerTwoScore, setPlayerTwoScore] = useState(0);
 
 
   const onePlayer = (name: string[]) => {
@@ -24,21 +26,22 @@ export default function Home() {
     setTwoUpNames(names);
   };
 
+  const handleScoreUpdate = (player1Score: number, player2Score: number) => {
+    setPlayerOneScore(player1Score);
+    setPlayerTwoScore(player2Score);
+  };
 
   return (
     <>
-        <Nav playerOne={oneUpName} playerTwo={twoUpNames}  />
+        <Nav playerOne={oneUpName} playerTwo={twoUpNames} playerOneScore={playerOneScore} playerTwoScore={playerTwoScore} />
       <div className="flex items-center justify-center">
         <div className="flex p-5 bg-secondary w-full sm:w-[50%] rounded-lg justify-center items-center ">
           {player === "1up" ? (
             <MemoryCard oneUpName={oneUpName} />
           ) : player === "2up" ? (
             <div className="flex flex-col">
-              <div className="text-center">Coming soon!</div>
                 <div className="text-center mt-2">
-
-                {/* <PlayerDialog setPlayer={onePlayer} isTwoPlayers={false} /> */}
-
+                <MemoryGame2up playerTwo={twoUpNames} onScoreUpdate={handleScoreUpdate} playerOneName={oneUpName} />
               </div>
             </div>
           ) : (

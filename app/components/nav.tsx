@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ModeToggle } from './ThemeSwitch'
 
 interface NavProps {
@@ -6,10 +6,22 @@ interface NavProps {
     // playerTwoPoint: number;
     playerOne: string;
     playerTwo: string[];
+    playerOneScore: number;
+    playerTwoScore: number;
 }
 
-export const Nav = ({   playerOne, playerTwo}: NavProps) => {
-    console.log(playerTwo);
+export const Nav = ({ playerOne, playerTwo, playerOneScore, playerTwoScore }: NavProps) => {
+    
+    const [animate, setAnimate] = useState(false);
+
+    useEffect(() => {
+        // Trigger animation when player names change
+        setAnimate(true);
+        const timer = setTimeout(() => setAnimate(false), 500); // Reset animation after 500ms
+        return () => clearTimeout(timer);
+    }, [playerOne, playerTwo]);
+    
+    console.log("Player info: ", playerTwo);
     return (
       <div className="p-2">
             <div className="w-full p-2 bg-gradient-to-r from-primary/50 to-accent/50 rounded-md mb-5 grid sm:grid-cols-3 grid-cols-1  border border-primary/50">
@@ -17,16 +29,16 @@ export const Nav = ({   playerOne, playerTwo}: NavProps) => {
                     Memory Card Game 
                 </div>
                 <div className='flex gap-2 text-xl justify-center items-center'>
-                    {playerOne || playerTwo.some(name => name.trim() !== "") ? (
-                        <>
-                            {playerOne && <div className='press-start-2p-regular'>Player 1: {playerOne}</div>}
-                            {playerTwo.some(name => name.trim() !== "") && (
-                                <div className='press-start-2p-regular'>
-                                   {playerTwo[0]}  Vs {playerTwo[1]} 
-                                </div>
-                            )}
-                        </>
-                    ) : null}
+                    {playerOne && (
+                        <div className={`press-start-2p-regular ${animate ? 'drop-impact' : ''}`}>
+                            Player: {playerOne} 
+                        </div>
+                    )}
+                    {playerTwo.some(name => name.trim() !== "") && (
+                        <div className={`press-start-2p-regular ${animate ? 'drop-impact' : ''}`}>
+                            {playerTwo[0]} ({playerOneScore}) Vs {playerTwo[1]} ({playerTwoScore})
+                        </div>
+                    )}
                 </div>
                 <div className='flex items-center gap-2 sm:justify-end justify-center'>Theme <ModeToggle /></div>
             </div>

@@ -60,6 +60,10 @@ export function ModeToggle() {
         setColor(savedColor); // Get saved color theme
       }
     }
+    const savedDeck = localStorage.getItem("themeDeck");
+    if (savedDeck) {
+      setDeck(savedDeck); // Get saved deck theme
+    }
   }, []);
 
   // Function to change the color theme
@@ -87,7 +91,7 @@ export function ModeToggle() {
     if (colorSet) {
       document.documentElement.classList.add(`theme-${colorSet}`);
     }
-  }, [colorSet]);
+  }, [colorSet, deckSet]);
 
   return (
     <Popover>
