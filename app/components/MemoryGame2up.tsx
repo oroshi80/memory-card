@@ -246,7 +246,7 @@ const MemoryGame: React.FC<{ playerTwo: string[]; onScoreUpdate: (player1Score: 
       
       console.log("Winner Score: ", winnerScore);
     }
-  }, [isGameWon, playerScores, playerTwo, onScoreUpdate]);
+  }, [isGameWon, playerScores, playerTwo, onScoreUpdate, winnerScore]);
 
   // Modify handlePlayAgain to reset game-specific states
   const handlePlayAgain = () => {
@@ -304,10 +304,10 @@ const MemoryGame: React.FC<{ playerTwo: string[]; onScoreUpdate: (player1Score: 
               {winner !== null ? (
                 <p className="text-md mt-2 press-start-2p-regular">{winner} wins!</p>
               ) : (
-                <p className="text-md mt-2 press-start-2p-regular">It's a tie!</p>
+                <p className="text-md mt-2 press-start-2p-regular">It&lsquo;s a tie!</p>
               )}
-              <p className="text-md mt-2 press-start-2p-regular">{playerTwo[0]}'s Score: {playerScores.player1}</p>
-              <p className="text-md mt-2 press-start-2p-regular">{playerTwo[1]}'s Score: {playerScores.player2}</p>
+              <p className="text-md mt-2 press-start-2p-regular">{playerTwo[0]}&lsquo;s Score: {playerScores.player1}</p>
+              <p className="text-md mt-2 press-start-2p-regular">{playerTwo[1]}&lsquo;s Score: {playerScores.player2}</p>
               <div className="flex gap-4 justify-center mt-4">
                 <Button onClick={handlePlayAgain} disabled={isShuffling}>Play Again</Button>
                 <Button onClick={handleBackToHome}>Back to Home</Button>
