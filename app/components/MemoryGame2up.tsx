@@ -246,7 +246,7 @@ const MemoryGame: React.FC<{ playerTwo: string[]; onScoreUpdate: (player1Score: 
       
       console.log("Winner Score: ", winnerScore);
     }
-  }, [isGameWon, playerScores, playerTwo, onScoreUpdate, winnerScore]);
+  }, [isGameWon, playerScores, playerTwo, onScoreUpdate]);
 
   // Modify handlePlayAgain to reset game-specific states
   const handlePlayAgain = () => {
