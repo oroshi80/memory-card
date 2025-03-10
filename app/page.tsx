@@ -41,7 +41,7 @@ export default function Home() {
           ) : player === "2up" ? (
             <div className="flex flex-col">
                 <div className="text-center mt-2">
-                <MemoryGame2up playerTwo={twoUpNames} onScoreUpdate={handleScoreUpdate} playerOneName={oneUpName} />
+                <MemoryGame2up playerTwo={twoUpNames} onScoreUpdate={handleScoreUpdate} />
               </div>
             </div>
           ) : (

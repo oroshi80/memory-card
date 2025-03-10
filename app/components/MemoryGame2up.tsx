@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
-import { Leaderboard } from "./Leaderboard";
 
 // Define the type for a card
 type CardType = {
@@ -58,7 +57,7 @@ const Card: React.FC<CardProps> = ({ card, onClick }) => {
 };
 
 // Memory Game Component
-const MemoryGame: React.FC<{ playerTwo: string[]; onScoreUpdate: (player1Score: number, player2Score: number) => void; playerOneName: string }> = ({ playerTwo, onScoreUpdate, playerOneName }) => {
+const MemoryGame: React.FC<{ playerTwo: string[]; onScoreUpdate: (player1Score: number, player2Score: number) => void;  }> = ({ playerTwo, onScoreUpdate }) => {
   const [cards, setCards] = useState<CardType[]>([]);
   const [flippedCards, setFlippedCards] = useState<CardType[]>([]);
   const [matchedCards, setMatchedCards] = useState<CardType[]>([]);
@@ -69,7 +68,6 @@ const MemoryGame: React.FC<{ playerTwo: string[]; onScoreUpdate: (player1Score: 
   const [playerScores, setPlayerScores] = useState<{ player1: number; player2: number }>({ player1: 0, player2: 0 });
   const [winner, setWinner] = useState<string | null>(null); // Track the winner
   const [winnerScore, setWinnerScore] = useState<{player1: number, player2: number}>({player1: 0, player2: 0}); // Track the winner's score
-  const scoreUpdatedRef = useRef(false); // Ref to track if scores have been updated
 
   // Function to initialize and shuffle cards
   const initializeCards = (difficultyLevel: string) => {
@@ -220,10 +218,13 @@ const MemoryGame: React.FC<{ playerTwo: string[]; onScoreUpdate: (player1Score: 
 
   // Handle game completion
   useEffect(() => {
-    if (isGameWon && !scoreUpdatedRef.current) {
+    if (isGameWon) { 
       // Determine the winner
       const player1Score = playerScores.player1;
       const player2Score = playerScores.player2;
+
+      console.log("Player 1 Score:", player1Score);
+      console.log("Player 2 Score:", player2Score);
 
       // Check if player 1 wins
       if (player1Score > player2Score) {
@@ -241,12 +242,9 @@ const MemoryGame: React.FC<{ playerTwo: string[]; onScoreUpdate: (player1Score: 
       }
 
       // Dispatch updated scores to Nav component
-      onScoreUpdate(winnerScore.player1 + (player1Score > player2Score ? 1 : 0), winnerScore.player2 + (player2Score > player1Score ? 1 : 0));
-
-      // Mark that scores have been updated
-      scoreUpdatedRef.current = true;
-   
-      console.log("Winner: score ", winnerScore);
+      onScoreUpdate(winnerScore.player1, winnerScore.player2);
+      
+      console.log("Winner Score: ", winnerScore);
     }
   }, [isGameWon, playerScores, playerTwo, onScoreUpdate]);
 
@@ -255,13 +253,9 @@ const MemoryGame: React.FC<{ playerTwo: string[]; onScoreUpdate: (player1Score: 
     setCards([]);
     setFlippedCards([]);
     setMatchedCards([]);
-    setPlayerScores((prevScores) => ({
-      player1: prevScores.player1,
-      player2: prevScores.player2,
-    })); // Keep scores
+    setPlayerScores({ player1: 0, player2: 0 }); // Reset current game scores
     setCurrentPlayer(1); // Reset to player 1
     setIsSelectingDifficulty(true); // Go back to difficulty selection
-    scoreUpdatedRef.current = false; // Reset the ref for the next game
   };
 
   const handleBackToHome = () => {
@@ -307,7 +301,7 @@ const MemoryGame: React.FC<{ playerTwo: string[]; onScoreUpdate: (player1Score: 
           {!isShuffling && isGameWon ? (
             <div className="win-message text-center">
               <p className="text-lg font-bold press-start-2p-regular">Game Over!</p>
-              {winner ? (
+              {winner !== null ? (
                 <p className="text-md mt-2 press-start-2p-regular">{winner} wins!</p>
               ) : (
                 <p className="text-md mt-2 press-start-2p-regular">It's a tie!</p>
