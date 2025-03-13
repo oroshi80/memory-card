@@ -54,16 +54,21 @@ const PlayerDialog = ({ setPlayer, isTwoPlayers }: { setPlayer: (name: string[])
       </DialogTrigger>
       <DialogContent className="mt-3" ref={dialogContentRef} onOpenAutoFocus={e=>e.preventDefault()}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-          <DialogHeader>
+          {/* <DialogHeader> */}
             <DialogTitle className="text-xl font-semibold">
               <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
                 Enter {isTwoPlayers ? "players" : "player"} name 
               </motion.span>
             </DialogTitle>
+            {/* <div className="text-xl font-semibold">
+            <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
+                Enter {isTwoPlayers ? "players" : "player"} name 
+              </motion.span>
+            </div> */}
             <div className="mt-2">
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
                 <Label htmlFor="name1">Player 1</Label>
-                <Input
+              <Input
                   type="text"
                   id="name1"
                   placeholder="Player 1"
@@ -79,8 +84,7 @@ const PlayerDialog = ({ setPlayer, isTwoPlayers }: { setPlayer: (name: string[])
                 {isTwoPlayers && (
                   <>
                     <Label htmlFor="name2">Player 2</Label>
-                    <Input
-                      autoFocus 
+                    <Input 
                       type="text"
                       id="name2"
                       placeholder="Player 2"
@@ -97,7 +101,7 @@ const PlayerDialog = ({ setPlayer, isTwoPlayers }: { setPlayer: (name: string[])
                 )}
               </motion.div>
             </div>
-          </DialogHeader>
+          {/* </DialogHeader> */}
           <DialogFooter className="mt-2">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button onClick={handleSetPlayer}>Set</Button>
