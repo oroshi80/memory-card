@@ -70,7 +70,7 @@ const PlayerDrawer = ({ setPlayer, isTwoPlayers }: { setPlayer: (name: string[])
               </motion.span>
             </DrawerTitle>
           </DrawerHeader>
-            <div className="mt-2">
+            <div className="mt-2 px-4">
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
                 <Label htmlFor="name1">Player 1</Label>
               <Input
