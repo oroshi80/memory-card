@@ -4,8 +4,10 @@ import MemoryCard from "@/app/components/MemoryGame";
 import { Separator } from "@/components/ui/separator";
 import { Leaderboard } from "./components/Leaderboard";
 import PlayerDialog from "@/app/components/PlayerDialog";
+import PlayerDrawer from "@/app/components/PlayerDialogMobile";
 import { Nav } from "@/app/components/nav";
 import MemoryGame2up from "./components/MemoryGame2up";
+import { useMediaQuery } from "usehooks-ts";
 
 
 export default function Home() {
@@ -14,6 +16,8 @@ export default function Home() {
   const [twoUpNames, setTwoUpNames] = useState(["", ""]);
   const [playerOneScore, setPlayerOneScore] = useState(0);
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
+
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
 
   const onePlayer = (name: string[]) => {
@@ -48,9 +52,19 @@ export default function Home() {
             <>
               <div className="flex flex-col">
                 <div className="text-center text-2xl mb-4 press-start-2p-regular">Select Player</div>
-                <div className="flex gap-10 justify-center items-center">
-                  <PlayerDialog setPlayer={onePlayer} isTwoPlayers={false} />
-                  <PlayerDialog setPlayer={twoPlayers} isTwoPlayers={true} />
+                    <div className="flex gap-10 justify-center items-center">
+                      {isMobile ? (
+                        <>
+                        <PlayerDrawer setPlayer={onePlayer} isTwoPlayers={false} />
+                        <PlayerDrawer setPlayer={twoPlayers} isTwoPlayers={true} />
+                        </>
+                      
+                      ): (
+                        <>
+                        <PlayerDialog setPlayer={onePlayer} isTwoPlayers={false} />
+                        <PlayerDialog setPlayer={twoPlayers} isTwoPlayers={true} />
+                        </>                          
+                      )}
                 </div>
                 <Separator className="mt-4 bg-neutral-500" />
 
