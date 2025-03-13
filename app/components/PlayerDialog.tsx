@@ -80,6 +80,7 @@ const PlayerDialog = ({ setPlayer, isTwoPlayers }: { setPlayer: (name: string[])
                   <>
                     <Label htmlFor="name2">Player 2</Label>
                     <Input
+                      autoFocus 
                       type="text"
                       id="name2"
                       placeholder="Player 2"
