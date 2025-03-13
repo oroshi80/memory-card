@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Dialog, DialogContent, DialogFooter, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -54,17 +54,13 @@ const PlayerDialog = ({ setPlayer, isTwoPlayers }: { setPlayer: (name: string[])
       </DialogTrigger>
       <DialogContent className="mt-3" ref={dialogContentRef} onOpenAutoFocus={e=>e.preventDefault()}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-          {/* <DialogHeader> */}
+          <DialogHeader>
             <DialogTitle className="text-xl font-semibold">
               <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
                 Enter {isTwoPlayers ? "players" : "player"} name 
               </motion.span>
             </DialogTitle>
-            {/* <div className="text-xl font-semibold">
-            <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
-                Enter {isTwoPlayers ? "players" : "player"} name 
-              </motion.span>
-            </div> */}
+          </DialogHeader>
             <div className="mt-2">
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
                 <Label htmlFor="name1">Player 1</Label>
@@ -101,7 +97,7 @@ const PlayerDialog = ({ setPlayer, isTwoPlayers }: { setPlayer: (name: string[])
                 )}
               </motion.div>
             </div>
-          {/* </DialogHeader> */}
+         
           <DialogFooter className="mt-2">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button onClick={handleSetPlayer}>Set</Button>
