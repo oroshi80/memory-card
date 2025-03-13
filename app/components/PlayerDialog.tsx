@@ -52,7 +52,7 @@ const PlayerDialog = ({ setPlayer, isTwoPlayers }: { setPlayer: (name: string[])
           </Button>
         </motion.div>
       </DialogTrigger>
-      <DialogContent className="mt-3" ref={dialogContentRef}>
+      <DialogContent className="mt-3" ref={dialogContentRef} onOpenAutoFocus={e=>e.preventDefault()}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
           <DialogHeader>
             <DialogTitle className="text-xl font-semibold">
